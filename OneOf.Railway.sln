@@ -1,0 +1,21 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneOf.Railway", "src\OneOf.Railway\OneOf.Railway.csproj", "{C5DF9884-3BB7-4247-95E1-515D7EEF6755}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{C4A18E57-731E-4900-93A5-161F123F6A30}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C5DF9884-3BB7-4247-95E1-515D7EEF6755}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5DF9884-3BB7-4247-95E1-515D7EEF6755}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5DF9884-3BB7-4247-95E1-515D7EEF6755}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5DF9884-3BB7-4247-95E1-515D7EEF6755}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C5DF9884-3BB7-4247-95E1-515D7EEF6755} = {C4A18E57-731E-4900-93A5-161F123F6A30}
+	EndGlobalSection
+EndGlobal
