@@ -8,7 +8,7 @@ public class Failure : IEquatable<Failure>
     {
         if (string.IsNullOrWhiteSpace(globalCode))
         {
-            throw new ArgumentException("GlobalId cannot be null or empty");
+            throw new ArgumentException($"{nameof(globalCode)} cannot be null or empty");
         }
         GlobalCode = globalCode;
     }
