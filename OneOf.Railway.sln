@@ -4,6 +4,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneOf.Railway", "src\OneOf.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{C4A18E57-731E-4900-93A5-161F123F6A30}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{20C6F2DA-1250-4615-803F-49980DB9D5C4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneOf.Railway.Tests", "test\OneOf.Railway.Tests\OneOf.Railway.Tests.csproj", "{B3D6933F-19AC-4960-A0CE-0BB0BC68997E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -14,8 +18,13 @@ Global
 		{C5DF9884-3BB7-4247-95E1-515D7EEF6755}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C5DF9884-3BB7-4247-95E1-515D7EEF6755}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C5DF9884-3BB7-4247-95E1-515D7EEF6755}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3D6933F-19AC-4960-A0CE-0BB0BC68997E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3D6933F-19AC-4960-A0CE-0BB0BC68997E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3D6933F-19AC-4960-A0CE-0BB0BC68997E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3D6933F-19AC-4960-A0CE-0BB0BC68997E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{C5DF9884-3BB7-4247-95E1-515D7EEF6755} = {C4A18E57-731E-4900-93A5-161F123F6A30}
+		{B3D6933F-19AC-4960-A0CE-0BB0BC68997E} = {20C6F2DA-1250-4615-803F-49980DB9D5C4}
 	EndGlobalSection
 EndGlobal
