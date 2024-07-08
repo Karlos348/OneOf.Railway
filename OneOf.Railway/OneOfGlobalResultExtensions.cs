@@ -40,10 +40,10 @@ public static class OneOfGlobalResultExtensions
 
     #region From GlobalResult<TResult>
 
-    public static GlobalResult Bind<TPrevResult, TResult>(this GlobalResult<TPrevResult> globalResult, Func<GlobalResult> f)
+    public static GlobalResult Bind<TPrevResult>(this GlobalResult<TPrevResult> globalResult, Func<TPrevResult, GlobalResult> f)
     {
         return globalResult.Match(
-            _ => f.Invoke(),
+            success => f.Invoke(success.Value),
             failure => failure);
     }
     
