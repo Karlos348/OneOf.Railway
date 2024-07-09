@@ -2,10 +2,15 @@
 
 public class ExceptionError : Failure
 {
-    public ExceptionError(string errorMessage, Exception exception) : base("CORE_EXCEPTION")
+    public ExceptionError(Exception exception, string? errorMessage = null) : base("CORE_EXCEPTION")
     {
-        ErrorMessage = errorMessage;
-        Exception = exception;
+        if (exception is null)
+        {
+            throw new ArgumentException($"{nameof(Exception)} cannot be null");
+        }
+
+        ErrorMessage = errorMessage ?? exception.Message;
+        Exception = exception ?? throw new ArgumentNullException(nameof(exception));
     }
     
     public string ErrorMessage { get; }
