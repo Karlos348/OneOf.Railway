@@ -34,7 +34,7 @@ public class BindFromSuccessTests
             .Bind(() => ResultFactory.Failure(error));
 
         Assert.True(result.IsFailure);
-        Assert.Equal(error, result.GetFailure().GlobalCode);
+        Assert.Equal(error, result.GetFailure().Code);
     }
     
     [Fact]
@@ -46,7 +46,7 @@ public class BindFromSuccessTests
             .Bind(() => ResultFactory.Failure<int>(error));
 
         Assert.True(result.IsFailure);
-        Assert.Equal(error, result.GetFailure().GlobalCode);
+        Assert.Equal(error, result.GetFailure().Code);
     }
     
     [Fact]
@@ -79,7 +79,7 @@ public class BindFromSuccessTests
             .Bind(() => Helper.FailureAsync(error));
 
         Assert.True(result.IsFailure);
-        Assert.Equal(error, result.GetFailure().GlobalCode);
+        Assert.Equal(error, result.GetFailure().Code);
     }
     
     [Fact]
@@ -91,6 +91,6 @@ public class BindFromSuccessTests
             .Bind(() => Helper.FailureAsync<int>(error));
 
         Assert.True(result.IsFailure);
-        Assert.Equal(error, result.GetFailure().GlobalCode);
+        Assert.Equal(error, result.GetFailure().Code);
     }
 }

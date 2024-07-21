@@ -4,15 +4,15 @@ using Xunit;
 
 namespace OneOf.Railway.Tests;
 
-public class GenericGlobalResultTests
+public class GenericResultTests
 {
     [Fact]
     public void ShouldBeSuccess_WhenConstructedWithSuccess()
     {
         var value = 348;
         var success = new Success<int>(value);
-        
-        GlobalResult<int> result = success;
+
+        Results.Result<int> result = success;
         
         Assert.True(result.IsSuccess);
         Assert.False(result.IsFailure);
@@ -24,11 +24,11 @@ public class GenericGlobalResultTests
     {
         var error = "Error";
         var failure = new Failure(error);
-        
-        GlobalResult<int> result = failure;
+
+        Results.Result<int> result = failure;
         
         Assert.False(result.IsSuccess);
         Assert.True(result.IsFailure);
-        Assert.Equal(error, result.GetFailure().GlobalCode);
+        Assert.Equal(error, result.GetFailure().Code);
     }
 }

@@ -1,8 +1,10 @@
 ﻿namespace OneOf.Railway.Results;
 
-public class ExceptionError : Failure
+public class ExceptionFailure : Failure
 {
-    public ExceptionError(Exception exception, string? errorMessage = null) : base("CORE_EXCEPTION")
+    public static readonly string BaseCode = "CORE_EXCEPTION";
+
+    public ExceptionFailure(Exception exception, string? errorMessage = null) : base(BaseCode)
     {
         if (exception is null)
         {

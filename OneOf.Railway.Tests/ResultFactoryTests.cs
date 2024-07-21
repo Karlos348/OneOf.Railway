@@ -27,26 +27,26 @@ public class ResultFactoryTests
     }
 
     [Fact]
-    public void ShouldReturnFailureWithGlobalId()
+    public void ShouldReturnFailureWithProperCode()
     {
-        var globalCode = "Error123";
+        var error = "Error123";
 
-        var result = ResultFactory.Failure(globalCode);
+        var result = ResultFactory.Failure(error);
 
         Assert.True(result.IsFailure);
-        Assert.Equal(globalCode,
-            result.GetFailure().GlobalCode);
+        Assert.Equal(error,
+            result.GetFailure().Code);
     }
 
     [Fact]
-    public void GenericResultShouldReturnFailureWithGlobalId()
+    public void GenericResultShouldReturnFailureWithProperCode()
     {
-        var globalCode = "Error456";
+        var error = "Error456";
 
-        var result = ResultFactory.Failure<string>(globalCode);
+        var result = ResultFactory.Failure<string>(error);
 
         Assert.True(result.IsFailure);
-        Assert.Equal(globalCode,
-            result.Match(_ => throw new InvalidOperationException(), failure => failure.GlobalCode));
+        Assert.Equal(error,
+            result.Match(_ => throw new InvalidOperationException(), failure => failure.Code));
     }
 }

@@ -6,38 +6,38 @@ namespace OneOf.Railway.Tests;
 public class FailureTests
 {
     [Fact]
-    public void ShouldThrowArgumentException_WhenGlobalCodeIsNull()
+    public void ShouldThrowArgumentException_WhenCodeIsNull()
     {
         Assert.Throws<ArgumentException>(() => new Failure(null));
     }
     
     [Fact]
-    public void ShouldThrowArgumentException_WhenGlobalCodeIsEmpty()
+    public void ShouldThrowArgumentException_WhenCodeIsEmpty()
     {
         Assert.Throws<ArgumentException>(() => new Failure(string.Empty));
         Assert.Throws<ArgumentException>(() => new Failure(" "));
     }
 
     [Fact]
-    public void ShouldSetGlobalCodeCorrectly()
+    public void ShouldSetCodeCorrectly()
     {
-        var globalCode = "ERROR_CODE";
+        var code = "ERROR_CODE";
 
-        var failure = new Failure(globalCode);
+        var failure = new Failure(code);
 
-        Assert.Equal(globalCode, failure.GlobalCode);
+        Assert.Equal(code, failure.Code);
     }
 
     [Fact]
-    public void IsValidationFailure_ShouldBeTrue_WhenGlobalCodeIsValidationCode()
+    public void IsValidationFailure_ShouldBeTrue_WhenCodeIsValidationCode()
     {
-        var failure = new Failure("CORE_VALIDATION");
+        var failure = new Failure(ValidationFailure.BaseCode);
 
         Assert.True(failure.IsValidationFailure);
     }
 
     [Fact]
-    public void IsValidationFailure_ShouldBeFalse_WhenGlobalCodeIsValidationCode()
+    public void IsValidationFailure_ShouldBeFalse_WhenCodeIsValidationCode()
     {
         var failure = new Failure("NOT_VALIDATION_CODE");
         
@@ -45,7 +45,7 @@ public class FailureTests
     }
 
     [Fact]
-    public void Equals_ShouldReturnTrue_ForSameGlobalCode()
+    public void Equals_ShouldReturnTrue_ForSameCodes()
     {
         var failure1 = new Failure("ERROR_CODE");
         var failure2 = new Failure("ERROR_CODE");
@@ -56,7 +56,7 @@ public class FailureTests
     }
 
     [Fact]
-    public void Equals_ShouldReturnFalse_WhenGlobalCodesAreDifferent()
+    public void Equals_ShouldReturnFalse_WhenCodesAreDifferent()
     {
         var failure1 = new Failure("ERROR_CODE_1");
         var failure2 = new Failure("ERROR_CODE_2");
@@ -77,7 +77,7 @@ public class FailureTests
     }
 
     [Fact]
-    public void GetHashCode_ShouldReturnSameHashCode_ForSameGlobalCode()
+    public void GetHashCode_ShouldReturnSameHashCode_ForSameCodes()
     {
         var failure1 = new Failure("ERROR_CODE");
         var failure2 = new Failure("ERROR_CODE");
@@ -89,7 +89,7 @@ public class FailureTests
     }
 
     [Fact]
-    public void GetHashCode_ShouldReturnDifferentHashCodes_WhenGlobalCodesAreDifferent()
+    public void GetHashCode_ShouldReturnDifferentHashCodes_WhenCodesAreDifferent()
     {
         var failure1 = new Failure("ERROR_CODE_1");
         var failure2 = new Failure("ERROR_CODE_2");
@@ -101,7 +101,7 @@ public class FailureTests
     }
 
     [Fact]
-    public void OperatorEquals_ShouldReturnTrue_ForSameGlobalCode()
+    public void OperatorEquals_ShouldReturnTrue_ForSameCodes()
     {
         var failure1 = new Failure("ERROR_CODE");
         var failure2 = new Failure("ERROR_CODE");
@@ -112,7 +112,7 @@ public class FailureTests
     }
 
     [Fact]
-    public void OperatorNotEquals_ShouldReturnFalse_ForSameGlobalCode()
+    public void OperatorNotEquals_ShouldReturnFalse_ForSameCodes()
     {
         var failure1 = new Failure("ERROR_CODE");
         var failure2 = new Failure("ERROR_CODE");
@@ -123,7 +123,7 @@ public class FailureTests
     }
 
     [Fact]
-    public void OperatorEquals_ShouldReturnFalse_WhenGlobalCodesAreDifferent()
+    public void OperatorEquals_ShouldReturnFalse_WhenCodesAreDifferent()
     {
         var failure1 = new Failure("ERROR_CODE_1");
         var failure2 = new Failure("ERROR_CODE_2");
@@ -134,7 +134,7 @@ public class FailureTests
     }
 
     [Fact]
-    public void OperatorNotEquals_ShouldReturnTrue_WhenGlobalCodesAreDifferent()
+    public void OperatorNotEquals_ShouldReturnTrue_WhenCodesAreDifferent()
     {
         var failure1 = new Failure("ERROR_CODE_1");
         var failure2 = new Failure("ERROR_CODE_2");

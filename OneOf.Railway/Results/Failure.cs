@@ -2,24 +2,24 @@
 
 public class Failure : IEquatable<Failure>
 {
-    public string GlobalCode { get; private set; }
+    public string Code { get; private set; }
 
-    public Failure(string globalCode)
+    public Failure(string code)
     {
-        if (string.IsNullOrWhiteSpace(globalCode))
+        if (string.IsNullOrWhiteSpace(code))
         {
-            throw new ArgumentException($"{nameof(globalCode)} cannot be null or empty");
+            throw new ArgumentException($"{nameof(code)} cannot be null or empty");
         }
-        GlobalCode = globalCode;
+        Code = code;
     }
 
-    public bool IsValidationFailure => GlobalCode == "CORE_VALIDATION";
+    public bool IsValidationFailure => Code == ValidationFailure.BaseCode;
 
     public override bool Equals(object? obj) => obj is Failure other && Equals(other);
 
-    public bool Equals(Failure p) => GlobalCode == p.GlobalCode;
+    public bool Equals(Failure p) => Code == p.Code;
 
-    public override int GetHashCode() => GlobalCode.GetHashCode();
+    public override int GetHashCode() => Code.GetHashCode();
 
     public static bool operator ==(Failure f1, Failure f2) => f1.Equals(f2);
 

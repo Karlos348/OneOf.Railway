@@ -8,9 +8,9 @@ public class GetValueTests
     public void ShouldReturnValue_WhenSuccess()
     {
         var expectedValue = 348;
-        var globalResult = ResultFactory.Success(expectedValue);
+        var success = ResultFactory.Success(expectedValue);
 
-        var result = OneOfGlobalResultExtensions.GetValue(globalResult);
+        var result = ResultExtensions.GetValue(success);
 
         Assert.Equal(expectedValue, result);
     }
@@ -18,8 +18,8 @@ public class GetValueTests
     [Fact]
     public void ShouldThrowInvalidOperationException_WhenFailure()
     {
-        var globalResult = ResultFactory.Failure<int>("Error");
+        var failure = ResultFactory.Failure<int>("Error");
         
-        Assert.Throws<InvalidOperationException>(() => OneOfGlobalResultExtensions.GetValue(globalResult));
+        Assert.Throws<InvalidOperationException>(() => ResultExtensions.GetValue(failure));
     }
 }

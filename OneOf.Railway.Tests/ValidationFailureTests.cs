@@ -3,24 +3,22 @@ using Xunit;
 
 namespace OneOf.Railway.Tests;
 
-public class ValidationErrorTests
+public class ValidationFailureTests
 {
     [Fact]
     public void ShouldInheritFromFailure()
     {
-        var validationError = new ValidationError("CODE1", "CODE2");
+        var validationError = new ValidationFailure("CODE1", "CODE2");
 
         Assert.IsAssignableFrom<Failure>(validationError);
     }
 
     [Fact]
-    public void ShouldSetGlobalCodeToValidationCode()
+    public void ShouldSetCodeAsToValidationCode()
     {
-        var validationCode = "CORE_VALIDATION";
-        
-        var validationError = new ValidationError("CODE1");
+        var validationError = new ValidationFailure("CODE1");
 
-        Assert.Equal(validationCode, validationError.GlobalCode);
+        Assert.Equal(ValidationFailure.BaseCode, validationError.Code);
     }
 
     [Fact]
@@ -28,7 +26,7 @@ public class ValidationErrorTests
     {
         var codes = new[] { "CODE1", "CODE2", "CODE3" };
 
-        var validationError = new ValidationError(codes);
+        var validationError = new ValidationFailure(codes);
 
         Assert.Equal(codes, validationError.Codes);
     }
@@ -36,7 +34,7 @@ public class ValidationErrorTests
     [Fact]
     public void ShouldBeValidationFailure()
     {
-        var validationError = new ValidationError("CODE1");
+        var validationError = new ValidationFailure("CODE1");
 
         Assert.True(validationError.IsValidationFailure);
     }
@@ -44,13 +42,13 @@ public class ValidationErrorTests
     [Fact]
     public void ShouldThrowArgumentException_WhenCodesContainNull()
     {
-        Assert.Throws<ArgumentException>(() => new ValidationError("CODE1", null));
+        Assert.Throws<ArgumentException>(() => new ValidationFailure("CODE1", null));
     }
 
     [Fact]
     public void ShouldThrowArgumentException_WhenCodesContainEmptyString()
     {
-        Assert.Throws<ArgumentException>(() => new ValidationError("CODE1", string.Empty));
-        Assert.Throws<ArgumentException>(() => new ValidationError("CODE1", " "));
+        Assert.Throws<ArgumentException>(() => new ValidationFailure("CODE1", string.Empty));
+        Assert.Throws<ArgumentException>(() => new ValidationFailure("CODE1", " "));
     }
 }

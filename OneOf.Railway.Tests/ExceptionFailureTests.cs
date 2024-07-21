@@ -3,22 +3,22 @@ using Xunit;
 
 namespace OneOf.Railway.Tests;
 
-public class ExceptionErrorTests
+public class ExceptionFailureTests
 {
     [Fact]
     public void ShouldInheritFromFailure()
     {
-        var exceptionError = new ExceptionError(new InvalidOperationException(), "msg");
+        var exceptionError = new ExceptionFailure(new InvalidOperationException(), "msg");
 
         Assert.IsAssignableFrom<Failure>(exceptionError);
     }
 
     [Fact]
-    public void ShouldSetGlobalCodeExceptionCode()
+    public void ShouldSetCodeAsExceptionCode()
     {
-        var exceptionError = new ExceptionError(new InvalidOperationException(), "msg");
+        var exceptionError = new ExceptionFailure(new InvalidOperationException(), "msg");
 
-        Assert.Equal("CORE_EXCEPTION", exceptionError.GlobalCode);
+        Assert.Equal(ExceptionFailure.BaseCode, exceptionError.Code);
     }
 
     [Fact]
@@ -26,7 +26,7 @@ public class ExceptionErrorTests
     {
         var errorMessage = "Error message";
 
-        var exceptionError = new ExceptionError(new InvalidOperationException(), errorMessage);
+        var exceptionError = new ExceptionFailure(new InvalidOperationException(), errorMessage);
 
         Assert.Equal(errorMessage, exceptionError.ErrorMessage);
     }
@@ -36,7 +36,7 @@ public class ExceptionErrorTests
     {
         var exception = new InvalidOperationException();
 
-        var exceptionError = new ExceptionError(exception, "msg");
+        var exceptionError = new ExceptionFailure(exception, "msg");
 
         Assert.Equal(exception, exceptionError.Exception);
     }
@@ -46,7 +46,7 @@ public class ExceptionErrorTests
     {
         var exception = new InvalidOperationException("Exception message");
 
-        var exceptionError = new ExceptionError(exception, null);
+        var exceptionError = new ExceptionFailure(exception, null);
 
         Assert.Equal(exception.Message, exceptionError.ErrorMessage);
     }
@@ -54,6 +54,6 @@ public class ExceptionErrorTests
     [Fact]
     public void ShouldThrowArgumentException_WhenExceptionIsNull()
     {
-        Assert.Throws<ArgumentException>(() => new ExceptionError(null, "msg"));
+        Assert.Throws<ArgumentException>(() => new ExceptionFailure(null, "msg"));
     }
 }

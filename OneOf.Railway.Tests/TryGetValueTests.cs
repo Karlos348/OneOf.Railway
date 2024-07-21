@@ -8,22 +8,22 @@ public class TryGetValueTests
     public void ShouldReturnTrueAndSetValue_WhenSuccess()
     {
         var expectedValue = 348;
-        var globalResult = ResultFactory.Success(expectedValue);
+        var success = ResultFactory.Success(expectedValue);
 
-        var success = globalResult.TryGetValue(out var value);
+        var result = success.TryGetValue(out var value);
 
-        Assert.True(success);
+        Assert.True(result);
         Assert.Equal(expectedValue, value);
     }
 
     [Fact]
     public void ShouldReturnFalseAndSetValueToDefault_WhenFailure()
     {
-        var globalResult = ResultFactory.Failure<int>("Error");
+        var failure = ResultFactory.Failure<int>("Error");
         
-        var success = globalResult.TryGetValue(out var value);
+        var result = failure.TryGetValue(out var value);
         
-        Assert.False(success);
+        Assert.False(result);
         Assert.Equal(default, value);
     }
 }

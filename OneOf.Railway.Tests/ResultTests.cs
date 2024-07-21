@@ -4,14 +4,14 @@ using Xunit;
 
 namespace OneOf.Railway.Tests;
 
-public class GlobalResultTests
+public class ResultTests
 {
     [Fact]
     public void ShouldBeSuccess_WhenConstructedWithSuccess()
     {
         var success = new Success();
         
-        GlobalResult result = success;
+        Result result = success;
         
         Assert.True(result.IsSuccess);
         Assert.False(result.IsFailure);
@@ -23,10 +23,10 @@ public class GlobalResultTests
         var error = "Error";
         var failure = new Failure(error);
         
-        GlobalResult result = failure;
+        Result result = failure;
         
         Assert.False(result.IsSuccess);
         Assert.True(result.IsFailure);
-        Assert.Equal(error, result.GetFailure().GlobalCode);
+        Assert.Equal(error, result.GetFailure().Code);
     }
 }

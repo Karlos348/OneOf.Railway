@@ -2,43 +2,29 @@
 
 namespace OneOf.Railway.Tests;
 
-public class MatchFromAsyncGenericGlobalResultTests
+public class MatchFromAsyncResultTests
 {
     [Fact]
     public async Task ShouldReturnSuccessResult()
     {
         var successResult = "Success";
-        var value = 348;
-        var successTask = Helper.SuccessAsync(value);
+        var successTask = Helper.SuccessAsync();
         
         var result = await successTask.Match(
-            _ => successResult, 
+            () => successResult, 
             _ => "x");
 
         Assert.Equal(successResult, result);
-    }
-    
-    [Fact]
-    public async Task ShouldPassResultToSuccessScope()
-    {
-        var value = 348;
-        var successTask = Helper.SuccessAsync(value);
-        
-        var result = await successTask.Match(
-            successValue => successValue, 
-            _ => throw new NotImplementedException());
-
-        Assert.Equal(value, result);
     }
 
     [Fact]
     public async Task ShouldReturnFailureResult()
     {
         var failureResult = "Failure";
-        var failureTask = Helper.FailureAsync<int>("Error");
+        var failureTask = Helper.FailureAsync("Error");
         
         var result = await failureTask.Match(
-            _ => "x", 
+            () => "x", 
             _ => failureResult);
         
         Assert.Equal(failureResult, result);
@@ -48,11 +34,11 @@ public class MatchFromAsyncGenericGlobalResultTests
     public async Task ShouldPassFailureToFailureScope()
     {
         var errorCode = "Error";
-        var failureTask = Helper.FailureAsync<int>(errorCode);
+        var failureTask = Helper.FailureAsync(errorCode);
         
         var result = await failureTask.Match(
-            _ => "x", 
-            failure => failure.GlobalCode);
+            () => "x", 
+            failure => failure.Code);
         
         Assert.Equal(errorCode, result);
     }

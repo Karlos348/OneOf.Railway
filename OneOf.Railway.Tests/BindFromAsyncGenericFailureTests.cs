@@ -13,7 +13,7 @@ public class BindFromAsyncGenericFailureTests
             .Bind(_ => ResultFactory.Success());
 
         Assert.True(result.IsFailure);
-        Assert.Equal(error, result.GetFailure().GlobalCode);
+        Assert.Equal(error, result.GetFailure().Code);
     }
     
     [Fact]
@@ -42,7 +42,7 @@ public class BindFromAsyncGenericFailureTests
             .Bind(_ => ResultFactory.Success(value));
 
         Assert.True(result.IsFailure);
-        Assert.Equal(error, result.GetFailure().GlobalCode);
+        Assert.Equal(error, result.GetFailure().Code);
     }
     
     [Fact]
@@ -71,7 +71,7 @@ public class BindFromAsyncGenericFailureTests
             .Bind(_ => ResultFactory.Failure("x"));
 
         Assert.True(result.IsFailure);
-        Assert.Equal(error, result.GetFailure().GlobalCode);
+        Assert.Equal(error, result.GetFailure().Code);
     }
     
     [Fact]
@@ -99,7 +99,7 @@ public class BindFromAsyncGenericFailureTests
             .Bind(_ => ResultFactory.Failure<int>("x"));
 
         Assert.True(result.IsFailure);
-        Assert.Equal(error, result.GetFailure().GlobalCode);
+        Assert.Equal(error, result.GetFailure().Code);
     }
     
     [Fact]
@@ -127,7 +127,7 @@ public class BindFromAsyncGenericFailureTests
             .Bind(_ => Helper.SuccessAsync());
 
         Assert.True(result.IsFailure);
-        Assert.Equal(error, result.GetFailure().GlobalCode);
+        Assert.Equal(error, result.GetFailure().Code);
     }
     
     [Fact]
@@ -156,7 +156,7 @@ public class BindFromAsyncGenericFailureTests
             .Bind(_ => Helper.SuccessAsync(value));
 
         Assert.True(result.IsFailure);
-        Assert.Equal(error, result.GetFailure().GlobalCode);
+        Assert.Equal(error, result.GetFailure().Code);
     }
     
     [Fact]
@@ -185,7 +185,7 @@ public class BindFromAsyncGenericFailureTests
             .Bind(_ => Helper.FailureAsync("another_error"));
 
         Assert.True(result.IsFailure);
-        Assert.Equal(error, result.GetFailure().GlobalCode);
+        Assert.Equal(error, result.GetFailure().Code);
     }
     
     [Fact]
@@ -213,7 +213,7 @@ public class BindFromAsyncGenericFailureTests
             .Bind(_ => Helper.FailureAsync<int>("another_error"));
 
         Assert.True(result.IsFailure);
-        Assert.Equal(error, result.GetFailure().GlobalCode);
+        Assert.Equal(error, result.GetFailure().Code);
     }
     
     [Fact]
