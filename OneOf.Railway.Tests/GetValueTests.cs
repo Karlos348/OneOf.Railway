@@ -10,7 +10,7 @@ public class GetValueTests
         var expectedValue = 348;
         var success = ResultFactory.Success(expectedValue);
 
-        var result = ResultExtensions.GetValue(success);
+        var result = success.GetValue();
 
         Assert.Equal(expectedValue, result);
     }
@@ -20,6 +20,6 @@ public class GetValueTests
     {
         var failure = ResultFactory.Failure<int>("Error");
         
-        Assert.Throws<InvalidOperationException>(() => ResultExtensions.GetValue(failure));
+        Assert.Throws<InvalidOperationException>(() => failure.GetValue());
     }
 }
