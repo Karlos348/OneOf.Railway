@@ -8,11 +8,11 @@ public class ExceptionFailure : Failure
     {
         if (exception is null)
         {
-            throw new ArgumentException($"{nameof(Exception)} cannot be null");
+            throw new ArgumentException($"{nameof(exception)} cannot be null");
         }
 
         ErrorMessage = errorMessage ?? exception.Message;
-        Exception = exception ?? throw new ArgumentNullException(nameof(exception));
+        Exception = exception;
     }
     
     public string ErrorMessage { get; }

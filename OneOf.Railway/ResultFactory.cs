@@ -11,4 +11,6 @@ public static class ResultFactory
     public static Results.Result<TResult> Success<TResult>(TResult result) => new Success<TResult>(result);
     public static Results.Result<TResult> Failure<TResult>(string code) => new Failure(code);
     public static Result Failure(string code) => new Failure(code);
+    public static Result ValidationFailure(params string[] codes) => new Results.ValidationFailure(codes);
+    public static Result ExceptionFailure(Exception exception, string? errorMessage = null) => new Results.ExceptionFailure(exception, errorMessage);
 }

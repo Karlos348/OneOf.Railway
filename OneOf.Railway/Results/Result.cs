@@ -68,14 +68,14 @@ public class Result<T> : OneOfBase<Success<T>, Failure>
             success => f.Invoke(success.Value),
             failure => Task.FromResult((Result)failure));
     }
-    
+
     public async Task<Result<TResult>> Bind<TResult>(Func<T, Task<Result<TResult>>> f)
     {
         return await Match(
             success => f.Invoke(success.Value),
             failure => Task.FromResult((Result<TResult>)failure));
     }
-    
+
     public bool TryGetValue(out T value) 
     {
         var (success, fetchedResult) = Match(
@@ -90,7 +90,7 @@ public class Result<T> : OneOfBase<Success<T>, Failure>
     {
         return Match(
             x => x.Value, 
-            _ => throw new InvalidOperationException());
+            _ => throw new InvalidOperationException("Cannot get value from a failed result."));
     }
     
     public static implicit operator Result<T>(Success<T> _) => new (_);

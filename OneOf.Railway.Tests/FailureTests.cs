@@ -29,19 +29,73 @@ public class FailureTests
     }
 
     [Fact]
-    public void IsValidationFailure_ShouldBeTrue_WhenCodeIsValidationCode()
+    public void IsValidationFailure_ShouldBeTrue_WhenInstanceIsValidationFailure()
     {
-        var failure = new Failure(ValidationFailure.BaseCode);
+        var failure = new ValidationFailure("CODE");
 
         Assert.True(failure.IsValidationFailure);
     }
 
     [Fact]
-    public void IsValidationFailure_ShouldBeFalse_WhenCodeIsValidationCode()
+    public void IsValidationFailure_ShouldBeFalse_WhenCodeIsNotValidationCode()
     {
         var failure = new Failure("NOT_VALIDATION_CODE");
-        
+
         Assert.False(failure.IsValidationFailure);
+    }
+
+    [Fact]
+    public void IsValidationFailure_ShouldBeFalse_WhenCodeMatchesValidationBaseCode_ButTypeIsNotValidationFailure()
+    {
+        var failure = new Failure(ValidationFailure.BaseCode);
+
+        Assert.False(failure.IsValidationFailure);
+    }
+
+    [Fact]
+    public void Equals_ShouldReturnFalse_WhenOtherIsNull()
+    {
+        var failure = new Failure("ERROR_CODE");
+
+        var areEqual = failure.Equals(null);
+
+        Assert.False(areEqual);
+    }
+
+    [Fact]
+    public void OperatorEquals_ShouldReturnTrue_WhenBothAreNull()
+    {
+        Failure? f1 = null;
+        Failure? f2 = null;
+
+        Assert.True(f1 == f2);
+    }
+
+    [Fact]
+    public void OperatorEquals_ShouldReturnFalse_WhenLeftIsNull()
+    {
+        Failure? f1 = null;
+        var f2 = new Failure("ERROR_CODE");
+
+        Assert.False(f1 == f2);
+    }
+
+    [Fact]
+    public void OperatorEquals_ShouldReturnFalse_WhenRightIsNull()
+    {
+        var f1 = new Failure("ERROR_CODE");
+        Failure? f2 = null;
+
+        Assert.False(f1 == f2);
+    }
+
+    [Fact]
+    public void OperatorNotEquals_ShouldReturnTrue_WhenLeftIsNull()
+    {
+        Failure? f1 = null;
+        var f2 = new Failure("ERROR_CODE");
+
+        Assert.True(f1 != f2);
     }
 
     [Fact]
@@ -142,5 +196,15 @@ public class FailureTests
         var areNotEqual = failure1 != failure2;
 
         Assert.True(areNotEqual);
+    }
+
+    [Fact]
+    public void Equals_ShouldReturnTrue_WhenFailureAndValidationFailureHaveSameCode()
+    {
+        var failure = new Failure(ValidationFailure.BaseCode);
+        var validationFailure = new ValidationFailure("CODE1");
+
+        Assert.True(failure.Equals(validationFailure));
+        Assert.True(failure == validationFailure);
     }
 }

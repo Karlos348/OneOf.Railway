@@ -51,4 +51,10 @@ public class ValidationFailureTests
         Assert.Throws<ArgumentException>(() => new ValidationFailure("CODE1", string.Empty));
         Assert.Throws<ArgumentException>(() => new ValidationFailure("CODE1", " "));
     }
+
+    [Fact]
+    public void ShouldThrowArgumentException_WhenCalledWithNoArguments()
+    {
+        Assert.Throws<ArgumentException>(() => new ValidationFailure());
+    }
 }

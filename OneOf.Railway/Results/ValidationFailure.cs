@@ -6,12 +6,12 @@ public class ValidationFailure : Failure
 
     public ValidationFailure(params string[] codes) : base(BaseCode)
     {
-        if (codes == null || codes.Any(string.IsNullOrWhiteSpace))
+        if (codes == null || codes.Length == 0 || codes.Any(string.IsNullOrWhiteSpace))
         {
             throw new ArgumentException($"{nameof(codes)} cannot be null or empty");
         }
         Codes = codes;
     }
     
-    public string[] Codes { get; }
+    public IReadOnlyList<string> Codes { get; }
 }
