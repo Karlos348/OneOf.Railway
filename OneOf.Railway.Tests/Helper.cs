@@ -6,7 +6,7 @@ public static class Helper
 {
     public static TValue GetValue<TValue>(this Result<TValue> result)
     {
-        return result.Match(x => x.Value, _ => throw new InvalidOperationException());
+        return result.GetValue();
     }
     
     public static Failure GetFailure(this Result result)

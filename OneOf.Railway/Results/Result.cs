@@ -68,14 +68,14 @@ public class Result<T> : OneOfBase<Success<T>, Failure>
             success => f.Invoke(success.Value),
             failure => Task.FromResult((Result)failure));
     }
-    
+
     public async Task<Result<TResult>> Bind<TResult>(Func<T, Task<Result<TResult>>> f)
     {
         return await Match(
             success => f.Invoke(success.Value),
             failure => Task.FromResult((Result<TResult>)failure));
     }
-    
+
     public bool TryGetValue(out T value) 
     {
         var (success, fetchedResult) = Match(

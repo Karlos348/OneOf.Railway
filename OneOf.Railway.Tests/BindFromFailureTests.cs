@@ -4,231 +4,123 @@ namespace OneOf.Railway.Tests;
 
 public class BindFromFailureTests
 {
-    [Fact]
-    public void ToSuccess()
+    [Theory]
+    [InlineData("Error")]
+    [InlineData("ANOTHER_ERROR")]
+    public void ToSuccess_ShouldPropagateFailureAndNotInvokeDelegate(string error)
     {
-        var error = "Error";
-        
+        var invoked = false;
+
         var result = ResultFactory.Failure(error)
-            .Bind(ResultFactory.Success);
+            .Bind(() => { invoked = true; return ResultFactory.Success(); });
 
         Assert.True(result.IsFailure);
         Assert.Equal(error, result.GetFailure().Code);
-    }
-    
-    [Fact]
-    public void ToSuccess_ShouldNotInvokeNextDelegate()
-    {
-        var error = "Error";
-        var invoked = false;
-        
-        ResultFactory.Failure(error)
-            .Bind(() =>
-            {
-                invoked = true;
-                return ResultFactory.Success();
-            });
-
         Assert.False(invoked);
     }
-    
-    [Fact]
-    public void ToGenericSuccess()
+
+    [Theory]
+    [InlineData("Error")]
+    [InlineData("ANOTHER_ERROR")]
+    public void ToGenericSuccess_ShouldPropagateFailureAndNotInvokeDelegate(string error)
     {
-        var value = 348;
-        var error = "Error";
-        
+        var invoked = false;
+
         var result = ResultFactory.Failure(error)
-            .Bind(() => ResultFactory.Success(value));
+            .Bind(() => { invoked = true; return ResultFactory.Success(348); });
 
         Assert.True(result.IsFailure);
         Assert.Equal(error, result.GetFailure().Code);
-    }
-    
-    [Fact]
-    public void ToGenericSuccess_ShouldNotInvokeNextDelegate()
-    {
-        var value = 348;
-        var error = "Error";
-        var invoked = false;
-        
-        ResultFactory.Failure(error)
-            .Bind(() =>
-            {
-                invoked = true;
-                return ResultFactory.Success(value);
-            });
-
         Assert.False(invoked);
     }
-    
-    [Fact]
-    public void ToFailure()
+
+    [Theory]
+    [InlineData("Error")]
+    [InlineData("ANOTHER_ERROR")]
+    public void ToFailure_ShouldPropagateOriginalFailureAndNotInvokeDelegate(string error)
     {
-        var error = "Error";
-        
+        var invoked = false;
+
         var result = ResultFactory.Failure(error)
-            .Bind(() => ResultFactory.Failure("x"));
+            .Bind(() => { invoked = true; return ResultFactory.Failure("x"); });
 
         Assert.True(result.IsFailure);
         Assert.Equal(error, result.GetFailure().Code);
-    }
-    
-    [Fact]
-    public void ToFailure_ShouldNotInvokeNextDelegate()
-    {
-        var error = "Error";
-        var invoked = false;
-        
-        ResultFactory.Failure(error)
-            .Bind(() =>
-            {
-                invoked = true;
-                return ResultFactory.Failure("x");
-            });
-
         Assert.False(invoked);
     }
-    
-    [Fact]
-    public void ToGenericFailure()
+
+    [Theory]
+    [InlineData("Error")]
+    [InlineData("ANOTHER_ERROR")]
+    public void ToGenericFailure_ShouldPropagateOriginalFailureAndNotInvokeDelegate(string error)
     {
-        var error = "Error";
-        
+        var invoked = false;
+
         var result = ResultFactory.Failure(error)
-            .Bind(() => ResultFactory.Failure<int>("x"));
+            .Bind(() => { invoked = true; return ResultFactory.Failure<int>("x"); });
 
         Assert.True(result.IsFailure);
         Assert.Equal(error, result.GetFailure().Code);
-    }
-    
-    [Fact]
-    public void ToGenericFailure_ShouldNotInvokeNextDelegate()
-    {
-        var error = "Error";
-        var invoked = false;
-        
-        ResultFactory.Failure(error)
-            .Bind(() =>
-            {
-                invoked = true;
-                return ResultFactory.Failure<int>("x");
-            });
-
-        Assert.False(invoked);
-    }
-    
-    [Fact]
-    public async Task ToAsyncSuccess()
-    {
-        var error = "Error";
-        
-        var result = await ResultFactory.Failure(error)
-            .Bind(Helper.SuccessAsync);
-
-        Assert.True(result.IsFailure);
-        Assert.Equal(error, result.GetFailure().Code);
-    }
-    
-    [Fact]
-    public async Task ToAsyncSuccess_ShouldNotInvokeNextDelegate()
-    {
-        var error = "Error";
-        var invoked = false;
-        
-        await ResultFactory.Failure(error)
-            .Bind(async () =>
-            {
-                invoked = true;
-                return await Helper.SuccessAsync();
-            });
-
-        Assert.False(invoked);
-    }
-    
-    [Fact]
-    public async Task ToAsyncGenericSuccess()
-    {
-        var error = "Error";
-        var value = 348;
-        
-        var result = await ResultFactory.Failure(error)
-            .Bind(() => Helper.SuccessAsync(value));
-
-        Assert.True(result.IsFailure);
-        Assert.Equal(error, result.GetFailure().Code);
-    }
-    
-    [Fact]
-    public async Task ToAsyncGenericSuccess_ShouldNotInvokeNextDelegate()
-    {
-        var error = "Error";
-        var value = 348;
-        var invoked = false;
-        
-        await ResultFactory.Failure(error)
-            .Bind(async () =>
-            {
-                invoked = true;
-                return await Helper.SuccessAsync(value);
-            });
-
         Assert.False(invoked);
     }
 
-    [Fact]
-    public async Task ToAsyncFailure()
+    [Theory]
+    [InlineData("Error")]
+    [InlineData("ANOTHER_ERROR")]
+    public async Task ToAsyncSuccess_ShouldPropagateFailureAndNotInvokeDelegate(string error)
     {
-        var error = "Error";
-        
+        var invoked = false;
+
         var result = await ResultFactory.Failure(error)
-            .Bind(() => Helper.FailureAsync("another_error"));
+            .Bind(async () => { invoked = true; return await Helper.SuccessAsync(); });
 
         Assert.True(result.IsFailure);
         Assert.Equal(error, result.GetFailure().Code);
-    }
-    
-    [Fact]
-    public async Task ToAsyncFailure_ShouldNotInvokeNextDelegate()
-    {
-        var error = "Error";
-        var invoked = false;
-        
-        await ResultFactory.Failure(error)
-            .Bind(async () =>
-            {
-                invoked = true;
-                return await Helper.FailureAsync("another_error");
-            });
-
         Assert.False(invoked);
     }
-    
-    [Fact]
-    public async Task ToAsyncGenericFailure()
+
+    [Theory]
+    [InlineData("Error")]
+    [InlineData("ANOTHER_ERROR")]
+    public async Task ToAsyncGenericSuccess_ShouldPropagateFailureAndNotInvokeDelegate(string error)
     {
-        var error = "Error";
-        
+        var invoked = false;
+
         var result = await ResultFactory.Failure(error)
-            .Bind(() => Helper.FailureAsync<int>("another_error"));
+            .Bind(async () => { invoked = true; return await Helper.SuccessAsync(348); });
 
         Assert.True(result.IsFailure);
         Assert.Equal(error, result.GetFailure().Code);
+        Assert.False(invoked);
     }
-    
-    [Fact]
-    public async Task ToAsyncGenericFailure_ShouldNotInvokeNextDelegate()
-    {
-        var error = "Error";
-        var invoked = false;
-        
-        await ResultFactory.Failure(error)
-            .Bind(async () =>
-            {
-                invoked = true;
-                return await Helper.FailureAsync<int>("another_error");
-            });
 
+    [Theory]
+    [InlineData("Error")]
+    [InlineData("ANOTHER_ERROR")]
+    public async Task ToAsyncFailure_ShouldPropagateOriginalFailureAndNotInvokeDelegate(string error)
+    {
+        var invoked = false;
+
+        var result = await ResultFactory.Failure(error)
+            .Bind(async () => { invoked = true; return await Helper.FailureAsync("another_error"); });
+
+        Assert.True(result.IsFailure);
+        Assert.Equal(error, result.GetFailure().Code);
+        Assert.False(invoked);
+    }
+
+    [Theory]
+    [InlineData("Error")]
+    [InlineData("ANOTHER_ERROR")]
+    public async Task ToAsyncGenericFailure_ShouldPropagateOriginalFailureAndNotInvokeDelegate(string error)
+    {
+        var invoked = false;
+
+        var result = await ResultFactory.Failure(error)
+            .Bind(async () => { invoked = true; return await Helper.FailureAsync<int>("another_error"); });
+
+        Assert.True(result.IsFailure);
+        Assert.Equal(error, result.GetFailure().Code);
         Assert.False(invoked);
     }
 }

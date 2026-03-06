@@ -12,7 +12,7 @@ public class ExceptionFailure : Failure
         }
 
         ErrorMessage = errorMessage ?? exception.Message;
-        Exception = exception ?? throw new ArgumentNullException(nameof(exception));
+        Exception = exception;
     }
     
     public string ErrorMessage { get; }

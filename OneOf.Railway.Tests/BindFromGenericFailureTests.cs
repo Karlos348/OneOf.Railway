@@ -4,231 +4,123 @@ namespace OneOf.Railway.Tests;
 
 public class BindFromGenericFailureTests
 {
-    [Fact]
-    public void ToSuccess()
+    [Theory]
+    [InlineData("Error")]
+    [InlineData("ANOTHER_ERROR")]
+    public void ToSuccess_ShouldPropagateFailureAndNotInvokeDelegate(string error)
     {
-        var error = "Error";
-        
+        var invoked = false;
+
         var result = ResultFactory.Failure<decimal>(error)
-            .Bind(_ => ResultFactory.Success());
+            .Bind(_ => { invoked = true; return ResultFactory.Success(); });
 
         Assert.True(result.IsFailure);
         Assert.Equal(error, result.GetFailure().Code);
+        Assert.False(invoked);
     }
-    
-    [Fact]
-    public void ToSuccess_ShouldNotInvokeNextDelegate()
-    {
-        var error = "Error";
-        var visited = false;
-        
-        ResultFactory.Failure<decimal>(error)
-            .Bind(_ =>
-            {
-                visited = true;
-                return ResultFactory.Success();
-            });
 
-        Assert.False(visited);
-    }
-    
-    [Fact]
-    public void ToGenericSuccess()
+    [Theory]
+    [InlineData("Error")]
+    [InlineData("ANOTHER_ERROR")]
+    public void ToGenericSuccess_ShouldPropagateFailureAndNotInvokeDelegate(string error)
     {
-        var value = 348;
-        var error = "Error";
-        
+        var invoked = false;
+
         var result = ResultFactory.Failure<decimal>(error)
-            .Bind(_ => ResultFactory.Success(value));
+            .Bind(_ => { invoked = true; return ResultFactory.Success(348); });
 
         Assert.True(result.IsFailure);
         Assert.Equal(error, result.GetFailure().Code);
+        Assert.False(invoked);
     }
-    
-    [Fact]
-    public void ToGenericSuccess_ShouldNotInvokeNextDelegate()
-    {
-        var value = 348;
-        var error = "Error";
-        var visited = false;
-        
-        ResultFactory.Failure<decimal>(error)
-            .Bind(_ =>
-            {
-                visited = true;
-                return ResultFactory.Success(value);
-            });
 
-        Assert.False(visited);
-    }
-    
-    [Fact]
-    public void ToFailure()
+    [Theory]
+    [InlineData("Error")]
+    [InlineData("ANOTHER_ERROR")]
+    public void ToFailure_ShouldPropagateOriginalFailureAndNotInvokeDelegate(string error)
     {
-        var error = "Error";
-        
+        var invoked = false;
+
         var result = ResultFactory.Failure<decimal>(error)
-            .Bind(_ => ResultFactory.Failure("x"));
+            .Bind(_ => { invoked = true; return ResultFactory.Failure("x"); });
 
         Assert.True(result.IsFailure);
         Assert.Equal(error, result.GetFailure().Code);
+        Assert.False(invoked);
     }
-    
-    [Fact]
-    public void ToFailure_ShouldNotInvokeNextDelegate()
-    {
-        var error = "Error";
-        var visited = false;
-        
-        ResultFactory.Failure<decimal>(error)
-            .Bind(_ =>
-            {
-                visited = true;
-                return ResultFactory.Failure("x");
-            });
 
-        Assert.False(visited);
-    }
-    
-    [Fact]
-    public void ToGenericFailure()
+    [Theory]
+    [InlineData("Error")]
+    [InlineData("ANOTHER_ERROR")]
+    public void ToGenericFailure_ShouldPropagateOriginalFailureAndNotInvokeDelegate(string error)
     {
-        var error = "Error";
-        
+        var invoked = false;
+
         var result = ResultFactory.Failure<decimal>(error)
-            .Bind(_ => ResultFactory.Failure<int>("x"));
+            .Bind(_ => { invoked = true; return ResultFactory.Failure<int>("x"); });
 
         Assert.True(result.IsFailure);
         Assert.Equal(error, result.GetFailure().Code);
+        Assert.False(invoked);
     }
-    
-    [Fact]
-    public void ToGenericFailure_ShouldNotInvokeNextDelegate()
-    {
-        var error = "Error";
-        var visited = false;
-        
-        ResultFactory.Failure<decimal>(error)
-            .Bind(_ =>
-            {
-                visited = true;
-                return ResultFactory.Failure<int>("x");
-            });
 
-        Assert.False(visited);
-    }
-    
-    [Fact]
-    public async Task ToAsyncSuccess()
+    [Theory]
+    [InlineData("Error")]
+    [InlineData("ANOTHER_ERROR")]
+    public async Task ToAsyncSuccess_ShouldPropagateFailureAndNotInvokeDelegate(string error)
     {
-        var error = "Error";
-        
+        var invoked = false;
+
         var result = await ResultFactory.Failure<decimal>(error)
-            .Bind(_ => Helper.SuccessAsync());
+            .Bind(async _ => { invoked = true; return await Helper.SuccessAsync(); });
 
         Assert.True(result.IsFailure);
         Assert.Equal(error, result.GetFailure().Code);
+        Assert.False(invoked);
     }
-    
-    [Fact]
-    public async Task ToAsyncSuccess_ShouldNotInvokeNextDelegate()
-    {
-        var error = "Error";
-        var visited = false;
-        
-        await ResultFactory.Failure<decimal>(error)
-            .Bind(async _ =>
-            {
-                visited = true;
-                return await Helper.SuccessAsync();
-            });
 
-        Assert.False(visited);
-    }
-    
-    [Fact]
-    public async Task ToAsyncGenericSuccess()
+    [Theory]
+    [InlineData("Error")]
+    [InlineData("ANOTHER_ERROR")]
+    public async Task ToAsyncGenericSuccess_ShouldPropagateFailureAndNotInvokeDelegate(string error)
     {
-        var error = "Error";
-        var value = 348;
-        
+        var invoked = false;
+
         var result = await ResultFactory.Failure<decimal>(error)
-            .Bind(_ => Helper.SuccessAsync(value));
+            .Bind(async _ => { invoked = true; return await Helper.SuccessAsync(348); });
 
         Assert.True(result.IsFailure);
         Assert.Equal(error, result.GetFailure().Code);
-    }
-    
-    [Fact]
-    public async Task ToAsyncGenericSuccess_ShouldNotInvokeNextDelegate()
-    {
-        var error = "Error";
-        var value = 348;
-        var visited = false;
-        
-        await ResultFactory.Failure<decimal>(error)
-            .Bind(async _ =>
-            {
-                visited = true;
-                return await Helper.SuccessAsync(value);
-            });
-
-        Assert.False(visited);
+        Assert.False(invoked);
     }
 
-    [Fact]
-    public async Task ToAsyncFailure()
+    [Theory]
+    [InlineData("Error")]
+    [InlineData("ANOTHER_ERROR")]
+    public async Task ToAsyncFailure_ShouldPropagateOriginalFailureAndNotInvokeDelegate(string error)
     {
-        var error = "Error";
-        
+        var invoked = false;
+
         var result = await ResultFactory.Failure<decimal>(error)
-            .Bind(_ => Helper.FailureAsync("another_error"));
+            .Bind(async _ => { invoked = true; return await Helper.FailureAsync("another_error"); });
 
         Assert.True(result.IsFailure);
         Assert.Equal(error, result.GetFailure().Code);
+        Assert.False(invoked);
     }
-    
-    [Fact]
-    public async Task ToAsyncFailure_ShouldNotInvokeNextDelegate()
-    {
-        var error = "Error";
-        var visited = false;
-        
-        await ResultFactory.Failure<decimal>(error)
-            .Bind(async _ =>
-            {
-                visited = true;
-                return await Helper.FailureAsync("another_error");
-            });
 
-        Assert.False(visited);
-    }
-    
-    [Fact]
-    public async Task ToAsyncGenericFailure()
+    [Theory]
+    [InlineData("Error")]
+    [InlineData("ANOTHER_ERROR")]
+    public async Task ToAsyncGenericFailure_ShouldPropagateOriginalFailureAndNotInvokeDelegate(string error)
     {
-        var error = "Error";
-        
+        var invoked = false;
+
         var result = await ResultFactory.Failure<decimal>(error)
-            .Bind(_ => Helper.FailureAsync<int>("another_error"));
+            .Bind(async _ => { invoked = true; return await Helper.FailureAsync<int>("another_error"); });
 
         Assert.True(result.IsFailure);
         Assert.Equal(error, result.GetFailure().Code);
-    }
-    
-    [Fact]
-    public async Task ToAsyncGenericFailure_ShouldNotInvokeNextDelegate()
-    {
-        var error = "Error";
-        var visited = false;
-        
-        await ResultFactory.Failure<decimal>(error)
-            .Bind(async _ =>
-            {
-                visited = true;
-                return await Helper.FailureAsync<int>("another_error");
-            });
-
-        Assert.False(visited);
+        Assert.False(invoked);
     }
 }
