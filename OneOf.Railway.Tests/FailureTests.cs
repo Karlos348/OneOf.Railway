@@ -197,4 +197,14 @@ public class FailureTests
 
         Assert.True(areNotEqual);
     }
+
+    [Fact]
+    public void Equals_ShouldReturnTrue_WhenFailureAndValidationFailureHaveSameCode()
+    {
+        var failure = new Failure(ValidationFailure.BaseCode);
+        var validationFailure = new ValidationFailure("CODE1");
+
+        Assert.True(failure.Equals(validationFailure));
+        Assert.True(failure == validationFailure);
+    }
 }

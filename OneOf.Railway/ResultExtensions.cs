@@ -11,25 +11,25 @@ public static class ResultExtensions
     public static async Task<Result> Bind(this Task<Result> task, Func<Result> f)
     {
         var result = await task;
-        return result.Bind(f.Invoke);
+        return result.Bind(f);
     }
 
     public static async Task<Result<TResult>> Bind<TResult>(this Task<Result> task, Func<Result<TResult>> f)
     {
         var result = await task;
-        return result.Bind(f.Invoke);
+        return result.Bind(f);
     }
 
     public static async Task<Result> Bind(this Task<Result> task, Func<Task<Result>> f)
     {
         var result = await task;
-        return await result.Bind(f.Invoke);
+        return await result.Bind(f);
     }
 
     public static async Task<Result<TResult>> Bind<TResult>(this Task<Result> task, Func<Task<Result<TResult>>> f)
     {
         var result = await task;
-        return await result.Bind(f.Invoke);
+        return await result.Bind(f);
     }
 
     #endregion
@@ -40,28 +40,28 @@ public static class ResultExtensions
         Func<TPrevResult, Result> f)
     {
         var result = await task;
-        return result.Bind(f.Invoke);
+        return result.Bind(f);
     }
 
     public static async Task<Result<TResult>> Bind<TPrevResult, TResult>(this Task<Result<TPrevResult>> task,
         Func<TPrevResult, Result<TResult>> f)
     {
         var result = await task;
-        return result.Bind(f.Invoke);
+        return result.Bind(f);
     }
 
     public static async Task<Result> Bind<TPrevResult>(this Task<Result<TPrevResult>> task,
         Func<TPrevResult, Task<Result>> f)
     {
         var result = await task;
-        return await result.Bind(f.Invoke);
+        return await result.Bind(f);
     }
 
     public static async Task<Result<TResult>> Bind<TPrevResult, TResult>(this Task<Result<TPrevResult>> task,
         Func<TPrevResult, Task<Result<TResult>>> f)
     {
         var result = await task;
-        return await result.Bind(f.Invoke);
+        return await result.Bind(f);
     }
 
     #endregion

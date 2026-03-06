@@ -11,12 +11,12 @@ public static class Helper
     
     public static Failure GetFailure(this Result result)
     {
-        return result.Match(_ => throw new InvalidOperationException(), f => f);
+        return result.Match(_ => throw new InvalidOperationException("Result is not a failure."), f => f);
     }
     
     public static Failure GetFailure<TValue>(this Result<TValue> result)
     {
-        return result.Match(_ => throw new InvalidOperationException(), f => f);
+        return result.Match(_ => throw new InvalidOperationException("Result is not a failure."), f => f);
     }
 
     public static Task<Result> SuccessAsync() => Task.FromResult(ResultFactory.Success());

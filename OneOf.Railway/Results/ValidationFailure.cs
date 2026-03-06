@@ -13,5 +13,5 @@ public class ValidationFailure : Failure
         Codes = codes;
     }
     
-    public string[] Codes { get; }
+    public IReadOnlyList<string> Codes { get; }
 }

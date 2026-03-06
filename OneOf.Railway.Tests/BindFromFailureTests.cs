@@ -72,7 +72,7 @@ public class BindFromFailureTests
         var invoked = false;
 
         var result = await ResultFactory.Failure(error)
-            .Bind(async () => { invoked = true; return await Helper.SuccessAsync(); });
+            .Bind(() => { invoked = true; return Helper.SuccessAsync(); });
 
         Assert.True(result.IsFailure);
         Assert.Equal(error, result.GetFailure().Code);
@@ -87,7 +87,7 @@ public class BindFromFailureTests
         var invoked = false;
 
         var result = await ResultFactory.Failure(error)
-            .Bind(async () => { invoked = true; return await Helper.SuccessAsync(348); });
+            .Bind(() => { invoked = true; return Helper.SuccessAsync(348); });
 
         Assert.True(result.IsFailure);
         Assert.Equal(error, result.GetFailure().Code);
@@ -102,7 +102,7 @@ public class BindFromFailureTests
         var invoked = false;
 
         var result = await ResultFactory.Failure(error)
-            .Bind(async () => { invoked = true; return await Helper.FailureAsync("another_error"); });
+            .Bind(() => { invoked = true; return Helper.FailureAsync("another_error"); });
 
         Assert.True(result.IsFailure);
         Assert.Equal(error, result.GetFailure().Code);
@@ -117,7 +117,7 @@ public class BindFromFailureTests
         var invoked = false;
 
         var result = await ResultFactory.Failure(error)
-            .Bind(async () => { invoked = true; return await Helper.FailureAsync<int>("another_error"); });
+            .Bind(() => { invoked = true; return Helper.FailureAsync<int>("another_error"); });
 
         Assert.True(result.IsFailure);
         Assert.Equal(error, result.GetFailure().Code);
